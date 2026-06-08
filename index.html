@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CÉLESTE - Tailored for confidence since 2026. Discover our exclusive collection of elegant, minimal, and luxury fashion tailored for the modern, confident woman.">
+  <meta name="keywords" content="Céleste, luxury fashion, women fashion, minimal clothing, elegant style, tailoring">
+  <title>CÉLESTE | Luxury Fashion Atelier</title>
+
+  <!-- Google Fonts: Cormorant Garamond for Serifs & Montserrat for Sans-Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- DESIGN SYSTEM & CSS VARIABLES --- */
+    :root {
+      --color-navy: #0d1b3e;
+      --color-navy-light: #162a55;
+      --color-navy-dark: #070f24;
+      --color-gold: #c9a84c;
+      --color-gold-light: #dfc26b;
+      --color-gold-dark: #ad8d33;
+      --color-cream: #f5ede0;
+      --color-cream-light: #faf7f2;
+      --color-cream-dark: #e8dac3;
+      --color-white: #ffffff;
+      --color-text-dark: #121824;
+      --color-text-muted: #5d6778;
+      --color-text-light: #ffffff;
+      --color-text-light-muted: rgba(255, 255, 255, 0.7);
+      
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-sans: 'Montserrat', sans-serif;
+      
+      --transition-slow: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      --transition-medium: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      --transition-fast: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+      
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --spacing-xl: 8rem;
+    }
+
+    /* --- RESET & BASE STYLES --- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-white);
+      color: var(--color-text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* --- CUSTOM SCROLLBAR --- */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--color-navy-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-gold);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-gold-light);
+    }
+
+    /* --- TYPOGRAPHY UTILITIES --- */
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+
+    p, span, a, button, input, textarea {
+      font-family: var(--font-sans);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition-fast);
+    }
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    /* --- FADE-IN ON SCROLL ANIMATIONS --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.15s; }
+    .delay-2 { transition-delay: 0.3s; }
+    .delay-3 { transition-delay: 0.45s; }
+
+    /* --- SCROLL PROGRESS BAR --- */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(to right, var(--color-gold), var(--color-gold-light));
+      z-index: 1001;
+    }
+
+    /* --- NAVIGATION --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: var(--transition-medium);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    header.scrolled {
+      background: rgba(13, 27, 62, 0.95);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 0.75rem 0;
+      box-shadow: 0 10px 30px rgba(7, 15, 36, 0.15);
+      border-bottom: 1px solid rgba(199, 168, 76, 0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+      transition: var(--transition-medium);
+    }
+
+    header.scrolled .nav-container {
+      height: 60px;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--color-gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-right: -0.25em; /* Compensate for final letter spacing */
+      display: inline-block;
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 1px;
+      background-color: var(--color-gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-text-light-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: var(--color-gold);
+      transition: var(--transition-fast);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover {
+      color: var(--color-white);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Hamburger Menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 16px;
+      z-index: 1010;
+    }
+
+    .menu-toggle span {
+      width: 100%;
+      height: 1px;
+      background-color: var(--color-gold);
+      transition: var(--transition-fast);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100vh;
+      background-color: var(--color-navy-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+      z-index: 999;
+      transition: var(--transition-medium);
+    }
+
+    .mobile-nav.open {
+      right: 0;
+    }
+
+    .mobile-nav .nav-link {
+      font-size: 1.2rem;
+      color: var(--color-white);
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      height: 100vh;
+      background-color: var(--color-navy);
+      /* Subtle luxury pattern: gold grid lines & gold radial glow */
+      background-image: 
+        radial-gradient(circle at center, rgba(199, 168, 76, 0.18) 0%, rgba(13, 27, 62, 0) 75%),
+        linear-gradient(rgba(199, 168, 76, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 168, 76, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 80px 80px, 80px 80px;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      color: var(--color-white);
+      padding-top: 80px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 0 var(--spacing-md);
+      z-index: 2;
+    }
+
+    .hero-pretitle {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-gold);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      margin-bottom: var(--spacing-sm);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .hero-title {
+      font-size: 5.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-white);
+      text-shadow: 0 0 40px rgba(199, 168, 76, 0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--color-cream);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--spacing-md);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 1.2rem 3rem;
+      border: 1px solid var(--color-gold);
+      color: var(--color-gold);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-medium);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-gold);
+      transition: var(--transition-medium);
+      z-index: -1;
+    }
+
+    .hero-cta:hover {
+      color: var(--color-navy);
+    }
+
+    .hero-cta:hover::before {
+      left: 0;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: var(--spacing-md);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xs);
+      opacity: 0;
+      animation: heroFadeIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) 1s forwards;
+    }
+
+    .hero-scroll-text {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-light-muted);
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--color-gold), transparent);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background-color: var(--color-white);
+      animation: scrollDot 2s infinite ease-in-out;
+    }
+
+    @keyframes heroFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scrollDot {
+      0% { top: -20px; }
+      100% { top: 60px; }
+    }
+
+    /* --- ABOUT SECTION --- */
+    .about {
+      padding: var(--spacing-xl) 0;
+      background-color: var(--color-cream);
+      color: var(--color-navy);
+      position: relative;
+    }
+
+    /* Stylized background ornament */
+    .about::after {
+      content: 'C';
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      font-family: var(--font-serif);
+      font-size: 25rem;
+      font-weight: 300;
+      color: rgba(13, 27, 62, 0.03);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--spacing-lg);
+      align-items: center;
+    }
+
+    .about-left {
+      padding-right: var(--spacing-md);
+    }
+
+    .about-subtitle {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-gold-dark);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .about-title {
+      font-size: 3.5rem;
+      line-height: 1.15;
+      color: var(--color-navy);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .about-quote {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--color-gold-dark);
+      border-left: 2px solid var(--color-gold);
+      padding-left: var(--spacing-md);
+      margin-bottom: var(--spacing-md);
+      line-height: 1.3;
+    }
+
+    .about-right {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      color: var(--color-text-dark);
+      font-weight: 300;
+      text-align: justify;
+    }
+
+    .about-signature {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--color-gold-dark);
+      margin-top: var(--spacing-sm);
+    }
+
+    /* --- COLLECTION SECTION --- */
+    .collection {
+      padding: var(--spacing-xl) 0;
+      background-color: var(--color-cream-light);
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--spacing-lg);
+      position: relative;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-gold-dark);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+      color: var(--color-navy);
+      letter-spacing: 0.05em;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 1px;
+      background-color: var(--color-gold);
+      margin: var(--spacing-sm) auto 0;
+    }
+
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    /* --- PRODUCT CARDS --- */
+    .product-card {
+      background: var(--color-white);
+      border: 1px solid rgba(13, 27, 62, 0.04);
+      padding: var(--spacing-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(13, 27, 62, 0.02);
+      transition: var(--transition-medium);
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 45px rgba(13, 27, 62, 0.06);
+      border-color: rgba(199, 168, 76, 0.25);
+    }
+
+    /* PRODUCT IMAGE CONTAINER */
+    .product-visual-container {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background-color: var(--color-cream-light);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+      display: block;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.06);
+    }
+
+    /* Card Quick View button sliding up on hover */
+    .product-action {
+      position: absolute;
+      bottom: -60px;
+      left: var(--spacing-sm);
+      right: var(--spacing-sm);
+      background-color: var(--color-navy);
+      color: var(--color-white);
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: var(--transition-medium);
+      opacity: 0;
+      border: 1px solid var(--color-gold);
+      z-index: 3;
+    }
+
+    .product-card:hover .product-action {
+      bottom: var(--spacing-sm);
+      opacity: 1;
+    }
+
+    .product-action:hover {
+      background-color: var(--color-gold);
+      color: var(--color-navy);
+    }
+
+    /* Meta info below image */
+    .product-info {
+      padding: 0.5rem 0.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .product-category {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--color-gold-dark);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .product-name {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      color: var(--color-navy);
+      font-weight: 400;
+    }
+
+    .product-price {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text-dark);
+    }
+
+
+    /* --- LOOKBOOK SECTION --- */
+    .lookbook {
+      padding: var(--spacing-xl) 0;
+      background-color: var(--color-navy);
+      color: var(--color-white);
+      position: relative;
+    }
+
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+
+    .lookbook-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      border: 1px solid rgba(199, 168, 76, 0.15);
+      background-size: 200% 200%;
+      transition: var(--transition-slow);
+    }
+
+    .lookbook-item.portrait {
+      grid-row: span 2;
+      aspect-ratio: 3/4;
+    }
+
+    .lookbook-item.full-width {
+      grid-column: span 2;
+      aspect-ratio: 21/9;
+    }
+
+    .lookbook-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-slow);
+      z-index: 1;
+    }
+
+    .lookbook-item:hover .lookbook-image {
+      transform: scale(1.06);
+    }
+
+    .lookbook-item:hover {
+      border-color: var(--color-gold);
+    }
+
+    /* Architectural golden overlays in Lookbook */
+    .lookbook-overlay-shape {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0.12;
+      background-image: radial-gradient(circle, var(--color-gold) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .lookbook-item.portrait .lookbook-overlay-shape {
+      background-image: linear-gradient(90deg, rgba(199, 168, 76, 0.25) 1px, transparent 1px);
+      background-size: 15px 15px;
+    }
+
+    .lookbook-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: var(--spacing-md);
+      background: linear-gradient(to top, rgba(7, 15, 36, 0.85) 0%, rgba(7, 15, 36, 0) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      z-index: 2;
+      height: 60%;
+      transition: var(--transition-medium);
+    }
+
+    .lookbook-item:hover .lookbook-content {
+      padding-bottom: calc(var(--spacing-md) + 10px);
+    }
+
+    .lookbook-num {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.25rem;
+    }
+
+    .lookbook-item-title {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .lookbook-item-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--color-text-light-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      max-width: 80%;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: var(--transition-medium);
+    }
+
+    .lookbook-item:hover .lookbook-item-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    /* --- CONTACT SECTION --- */
+    .contact {
+      padding: var(--spacing-xl) 0;
+      background-color: var(--color-cream);
+      color: var(--color-navy);
+      position: relative;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .contact-info-block h3 {
+      font-size: 1.6rem;
+      color: var(--color-navy);
+      margin-bottom: var(--spacing-xs);
+      letter-spacing: 0.05em;
+    }
+
+    .contact-info-block p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--color-text-dark);
+      line-height: 1.8;
+    }
+
+    .contact-info-block a {
+      color: var(--color-gold-dark);
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+    }
+
+    .contact-info-block a:hover {
+      border-color: var(--color-gold-dark);
+    }
+
+    .contact-social-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-xs);
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.2rem;
+      border: 1px solid var(--color-navy);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: var(--transition-medium);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .social-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-navy);
+      transition: var(--transition-medium);
+      z-index: -1;
+    }
+
+    .social-btn:hover {
+      color: var(--color-white);
+    }
+
+    .social-btn:hover::before {
+      left: 0;
+    }
+
+    .social-btn svg {
+      fill: currentColor;
+      width: 18px;
+      height: 18px;
+    }
+
+    .social-btn.whatsapp {
+      border-color: #25d366;
+      color: #25d366;
+    }
+    .social-btn.whatsapp::before {
+      background-color: #25d366;
+    }
+    .social-btn.whatsapp:hover {
+      color: var(--color-navy-dark);
+    }
+
+    .social-btn.instagram {
+      border-color: var(--color-gold-dark);
+      color: var(--color-gold-dark);
+    }
+    .social-btn.instagram::before {
+      background-color: var(--color-gold-dark);
+    }
+    .social-btn.instagram:hover {
+      color: var(--color-white);
+    }
+
+    /* ENQUIRY FORM / CIRCLE SIGNUP */
+    .contact-form-container {
+      background-color: var(--color-white);
+      border: 1px solid rgba(13, 27, 62, 0.05);
+      padding: 3rem;
+      box-shadow: 0 15px 40px rgba(13, 27, 62, 0.03);
+    }
+
+    .form-title {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      margin-bottom: var(--spacing-sm);
+      color: var(--color-navy);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 1rem 0;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(13, 27, 62, 0.2);
+      font-size: 0.95rem;
+      color: var(--color-navy);
+      outline: none;
+      transition: var(--transition-fast);
+      font-weight: 300;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-bottom-color: var(--color-gold);
+    }
+
+    .form-label {
+      position: absolute;
+      left: 0;
+      top: 1rem;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: var(--transition-medium);
+    }
+
+    /* Shift label up if focused or filled */
+    .form-input:focus ~ .form-label,
+    .form-input:not(:placeholder-shown) ~ .form-label,
+    .form-textarea:focus ~ .form-label,
+    .form-textarea:not(:placeholder-shown) ~ .form-label {
+      top: -10px;
+      font-size: 0.7rem;
+      color: var(--color-gold-dark);
+    }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background-color: var(--color-navy);
+      color: var(--color-white);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border: 1px solid var(--color-navy);
+      transition: var(--transition-medium);
+      margin-top: 1rem;
+    }
+
+    .form-submit-btn:hover {
+      background-color: transparent;
+      color: var(--color-navy);
+      border-color: var(--color-navy);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      background-color: var(--color-navy-dark);
+      color: var(--color-text-light-muted);
+      padding: var(--spacing-xl) 0 var(--spacing-md);
+      border-top: 1px solid rgba(199, 168, 76, 0.15);
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .footer-brand h2 {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--color-gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--color-cream);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .footer-links-col h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .footer-links-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 25px;
+      height: 1px;
+      background-color: var(--color-gold);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .footer-links a {
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links a:hover {
+      color: var(--color-gold);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: var(--spacing-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: var(--spacing-md);
+      right: var(--spacing-md);
+      width: 45px;
+      height: 45px;
+      background-color: var(--color-navy);
+      color: var(--color-gold);
+      border: 1px solid var(--color-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-medium);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--color-gold);
+      color: var(--color-navy);
+      transform: translateY(-3px);
+    }
+
+    .back-to-top svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+
+    /* --- RESPONSIVE MEDIA QUERIES --- */
+    @media (max-width: 1024px) {
+      .hero-title {
+        font-size: 4.5rem;
+      }
+      .about-grid, .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
+      .about-left {
+        padding-right: 0;
+      }
+      .collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+      }
+      .footer-brand {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+      .hero-title {
+        font-size: 3.5rem;
+      }
+      .hero-tagline {
+        font-size: 1.4rem;
+      }
+      .collection-grid {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+      .lookbook-grid {
+        grid-template-columns: 1fr;
+      }
+      .lookbook-item.portrait {
+        grid-row: auto;
+        aspect-ratio: 16/10;
+      }
+      .lookbook-item.full-width {
+        grid-column: auto;
+        aspect-ratio: 16/10;
+      }
+      .contact-form-container {
+        padding: 2rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-brand {
+        grid-column: auto;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --spacing-xl: 5rem;
+        --spacing-lg: 3rem;
+      }
+      .hero-title {
+        font-size: 2.8rem;
+      }
+      .hero-tagline {
+        font-size: 1.2rem;
+      }
+      .hero-cta {
+        padding: 1rem 2rem;
+        font-size: 0.8rem;
+      }
+      .about-title, .section-title {
+        font-size: 2.5rem;
+      }
+      .about-quote {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- HEADER / NAVIGATION -->
+  <header id="header">
+    <div class="container nav-container">
+      <a href="#" class="logo">CÉLESTE</a>
+      
+      <nav class="nav-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#collection" class="nav-link">Collection</a>
+        <a href="#lookbook" class="nav-link">Lookbook</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" class="nav-link mobile-close">About</a>
+    <a href="#collection" class="nav-link mobile-close">Collection</a>
+    <a href="#lookbook" class="nav-link mobile-close">Lookbook</a>
+    <a href="#contact" class="nav-link mobile-close">Contact</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h2 class="hero-pretitle">High Fashion Atelier</h2>
+      <h1 class="hero-title">CÉLESTE</h1>
+      <p class="hero-tagline">"Tailored for confidence since 2026"</p>
+      <a href="#collection" class="hero-cta">Shop Collection</a>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <span class="hero-scroll-text">Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about reveal" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-left">
+          <p class="about-subtitle">The Atelier Story</p>
+          <h2 class="about-title">Crafted To Empower</h2>
+          <p class="about-quote">"Style is a silent statement of self-assurance."</p>
+        </div>
+        <div class="about-right">
+          <p class="about-text">
+            Established in 2026, CÉLESTE blends classical European tailoring with modern architectural lines. We design clothing for the woman who commands the room with silent authority. Our collections are manufactured in strictly limited releases to preserve exclusivity, protect our artisan supply chains, and minimize carbon footprint.
+          </p>
+          <p class="about-text">
+            Every garment is constructed using materials of the highest pedigree — biological linen, pure mulberry silk, and structural wool. We believe that true luxury lies not in the volume of garments, but in the precision of their cuts, the depth of their details, and the confidence they instill.
+          </p>
+          <div class="about-signature">Maison CÉLESTE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTION SECTION -->
+  <section class="collection reveal" id="collection">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Curated Essentials</p>
+        <h2 class="section-title">The Collection</h2>
+      </div>
+
+      <div class="collection-grid">
+        
+        <!-- CARD 1: Linen Co-ord Set -->
+        <div class="product-card reveal delay-1">
+          <div class="product-visual-container">
+            <img src="assets/linen_coord_set.png" alt="Linen Co-ord Set" class="product-image">
+            <button class="product-action">Explore Piece</button>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Pure Organic Linen</span>
+            <h3 class="product-name">Linen Co-ord Set</h3>
+            <span class="product-price">$120.00</span>
+          </div>
+        </div>
+
+        <!-- CARD 2: Halter Top -->
+        <div class="product-card reveal delay-2">
+          <div class="product-visual-container">
+            <img src="assets/halter_top.png" alt="Halter Top" class="product-image">
+            <button class="product-action">Explore Piece</button>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Textured Knit</span>
+            <h3 class="product-name">Halter Top</h3>
+            <span class="product-price">$45.00</span>
+          </div>
+        </div>
+
+        <!-- CARD 3: Printed Shirt -->
+        <div class="product-card reveal delay-3">
+          <div class="product-visual-container">
+            <img src="assets/printed_shirt.png" alt="Printed Shirt" class="product-image">
+            <button class="product-action">Explore Piece</button>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Mulberry Silk</span>
+            <h3 class="product-name">Printed Shirt</h3>
+            <span class="product-price">$65.00</span>
+          </div>
+        </div>
+
+        <!-- CARD 4: Navy Set -->
+        <div class="product-card reveal delay-1">
+          <div class="product-visual-container">
+            <img src="assets/navy_set.png" alt="Navy Set" class="product-image">
+            <button class="product-action">Explore Piece</button>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Structural Wool</span>
+            <h3 class="product-name">Navy Set</h3>
+            <span class="product-price">$110.00</span>
+          </div>
+        </div>
+
+        <!-- CARD 5: Pink Top -->
+        <div class="product-card reveal delay-2">
+          <div class="product-visual-container">
+            <img src="assets/pink_top.png" alt="Pink Top" class="product-image">
+            <button class="product-action">Explore Piece</button>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Crepe De Chine</span>
+            <h3 class="product-name">Pink Top</h3>
+            <span class="product-price">$35.00</span>
+          </div>
+        </div>
+
+        <!-- CARD 6: Tote Bag -->
+        <div class="product-card reveal delay-3">
+          <div class="product-visual-container">
+            <img src="assets/tote_bag.png" alt="Tote Bag" class="product-image">
+            <button class="product-action">Explore Piece</button>
+          </div>
+          <div class="product-info">
+            <span class="product-category">Italian Grain Leather</span>
+            <h3 class="product-name">Tote Bag</h3>
+            <span class="product-price">$55.00</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK SECTION -->
+  <section class="lookbook reveal" id="lookbook">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Visual Editorial</p>
+        <h2 class="section-title" style="color: var(--color-white)">Autumn/Winter 2026</h2>
+      </div>
+
+      <div class="lookbook-grid">
+        
+        <!-- LOOK 1: Landscape dusk Sunset -->
+        <div class="lookbook-item reveal delay-1">
+          <img src="assets/look_dusk.png" alt="L'Heure Bleue" class="lookbook-image">
+          <div class="lookbook-overlay-shape"></div>
+          <div class="lookbook-content">
+            <span class="lookbook-num">LOOK 01</span>
+            <h3 class="lookbook-item-title">L'Heure Bleue</h3>
+            <p class="lookbook-item-desc">A study in fluid movement and structured shadows</p>
+          </div>
+        </div>
+
+        <!-- LOOK 2: Portrait Golden Hour -->
+        <div class="lookbook-item portrait reveal delay-2">
+          <img src="assets/look_drape.png" alt="The Drape" class="lookbook-image">
+          <div class="lookbook-overlay-shape"></div>
+          <div class="lookbook-content">
+            <span class="lookbook-num">LOOK 02</span>
+            <h3 class="lookbook-item-title">The Drape</h3>
+            <p class="lookbook-item-desc">Refined silk silhouettes highlighting organic curves</p>
+          </div>
+        </div>
+
+        <!-- LOOK 3: Landscape Dawn Dawn Grid -->
+        <div class="lookbook-item reveal delay-3">
+          <img src="assets/look_dawn.png" alt="Silent Luxury" class="lookbook-image">
+          <div class="lookbook-overlay-shape"></div>
+          <div class="lookbook-content">
+            <span class="lookbook-num">LOOK 03</span>
+            <h3 class="lookbook-item-title">Silent Luxury</h3>
+            <p class="lookbook-item-desc">Minimalist layers designed for silent confidence</p>
+          </div>
+        </div>
+
+        <!-- LOOK 4: Full-width Editorial -->
+        <div class="lookbook-item full-width reveal delay-2">
+          <img src="assets/look_dusk.png" alt="La Femme Moderne" class="lookbook-image">
+          <div class="lookbook-overlay-shape" style="background-image: repeating-linear-gradient(45deg, rgba(199, 168, 76, 0.05) 0px, rgba(199, 168, 76, 0.05) 1px, transparent 1px, transparent 10px); background-size: auto; z-index: 2;"></div>
+          <div class="lookbook-content">
+            <span class="lookbook-num">EDITORIAL COLLECTION</span>
+            <h3 class="lookbook-item-title">La Femme Moderne</h3>
+            <p class="lookbook-item-desc">Tailoring designed for confidence, elegance, and timeless authority</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / ATELIER SECTION -->
+  <section class="contact reveal" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-subtitle">Private Concierge</p>
+        <h2 class="section-title">Connect With Us</h2>
+      </div>
+
+      <div class="contact-grid">
+        
+        <!-- Info Column -->
+        <div class="contact-details reveal delay-1">
+          <div class="contact-info-block">
+            <h3>Visit the Atelier</h3>
+            <p>Our salons are open for bespoke tailoring, fit adjustments, and private shopping appointments.</p>
+            <p style="margin-top: 0.5rem; font-weight: 500;">
+              85 Rue de l'Étoile, Paris<br>
+              12 Bond Street, London
+            </p>
+          </div>
+
+          <div class="contact-info-block">
+            <h3>Inquiries</h3>
+            <p>For custom commissions, scaling, or product availability:</p>
+            <p><a href="mailto:concierge@celeste-fashion.com">concierge@celeste-fashion.com</a></p>
+          </div>
+
+          <div class="contact-social-buttons">
+            <!-- WhatsApp CTA button -->
+            <a href="https://wa.me/1234567890" target="_blank" class="social-btn whatsapp">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L3 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              Chat on WhatsApp
+            </a>
+
+            <!-- Instagram CTA button -->
+            <a href="https://instagram.com" target="_blank" class="social-btn instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.9c-41.4 0-75-33.6-75-75s33.6-75 75-75 75 33.6 75 75-33.6 75-75 75zm133.5-199c-12.5 0-22.7 10.2-22.7 22.7 0 12.5 10.2 22.7 22.7 22.7 12.5 0 22.7-10.2 22.7-22.7 0-12.5-10.2-22.7-22.7-22.7zM400 32c44.2 0 80 35.8 80 80v320c0 44.2-35.8 80-80 80H48c-44.2 0-80-35.8-80-80V112c0-44.2 35.8-80 80-80h352m-.8 47.9h-350.4c-18 0-32.8 14.8-32.8 32.8v350.4c0 18 14.8 32.8 32.8 32.8h350.4c18 0 32.8-14.8 32.8-32.8V112.7c0-18-14.8-32.8-32.8-32.8z"/>
+              </svg>
+              Follow @CELESTE
+            </a>
+          </div>
+        </div>
+
+        <!-- Enquiry Form Column -->
+        <div class="contact-form-container reveal delay-2">
+          <h3 class="form-title">Atelier Inquiry</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.1em;">Request a catalog or booking</p>
+          
+          <form id="enquiryForm" onsubmit="event.preventDefault(); alert('Thank you. Our concierge will contact you shortly.');">
+            <div class="form-group">
+              <input type="text" id="name" class="form-input" placeholder=" " required autocomplete="off">
+              <label for="name" class="form-label">Full Name</label>
+            </div>
+            
+            <div class="form-group">
+              <input type="email" id="email" class="form-input" placeholder=" " required autocomplete="off">
+              <label for="email" class="form-label">Email Address</label>
+            </div>
+            
+            <div class="form-group">
+              <textarea id="message" class="form-textarea" rows="4" placeholder=" " required autocomplete="off"></textarea>
+              <label for="message" class="form-label">How can we assist you?</label>
+            </div>
+
+            <button type="submit" class="form-submit-btn">Send Inquiry</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>CÉLESTE</h2>
+          <p class="footer-tagline">"Tailored for confidence since 2026"</p>
+          <p style="font-size: 0.85rem; line-height: 1.8; max-width: 380px;">A high-end, minimal clothing brand catering to modern confident women who seek precision, craftsmanship, and timeless aesthetics.</p>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Sitemap</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Story</a></li>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#lookbook">Lookbook</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Shipping & Returns</a></li>
+            <li><a href="#">Bespoke Guide</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 CÉLESTE Atelier. All rights reserved.</p>
+        <p>Designed for confidence.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="back-to-top" id="backToTop" aria-label="Scroll to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+      <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/>
+    </svg>
+  </button>
+
+  <!-- INTERACTIVE JAVASCRIPT -->
+  <script>
+    // 1. Navigation scroll styling & Scroll Progress bar
+    const header = document.getElementById('header');
+    const scrollProgress = document.getElementById('scrollProgress');
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      // Background shift on scroll
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+
+      // Scroll progress computation
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        const scrolledPercentage = (window.scrollY / totalScroll) * 100;
+        scrollProgress.style.width = `${scrolledPercentage}%`;
+      }
+
+      // Back to top button display
+      if (window.scrollY > window.innerHeight) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    // 2. Mobile Drawer Navigation toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileCloses = document.querySelectorAll('.mobile-close');
+
+    menuToggle.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+      menuToggle.classList.toggle('active');
+      
+      // Transform hamburger into an 'X'
+      const spans = menuToggle.querySelectorAll('span');
+      if (mobileNav.classList.contains('open')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+
+    // Close mobile menu when clicking links
+    mobileCloses.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        const spans = menuToggle.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      });
+    });
+
+    // 3. Scroll Reveal Observer
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Unobserve once animated
+        }
+      });
+    }, {
+      threshold: 0.05, // Fire when 5% of element is in view
+      rootMargin: '0px 0px -50px 0px' // Offset slightly to reveal before screen bottom
+    });
+
+    revealElements.forEach(element => {
+      revealObserver.observe(element);
+    });
+
+    // 4. Back to top action
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // 5. Active link tracking in navbar on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.style.color = '';
+        if (link.getAttribute('href') === `#${current}`) {
+          link.style.color = 'var(--color-gold)';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
